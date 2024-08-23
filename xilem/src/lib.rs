@@ -8,11 +8,10 @@
 use std::{collections::HashMap, sync::Arc};
 
 use masonry::{
-    dpi::LogicalSize,
-    event_loop_runner,
-    widget::{RootWidget, WidgetMut},
-    Widget, WidgetId, WidgetPod,
+    dpi::LogicalSize, event_loop_runner, widget::{RootWidget, WidgetMut}, PaintCtx, Widget, WidgetId, WidgetPod
 };
+use vello::Scene;
+use view::Paint;
 use winit::{
     error::EventLoopError,
     window::{Window, WindowAttributes},
@@ -211,6 +210,17 @@ pub trait WidgetView<State, Action = ()>:
         Self: Sized,
     {
         Box::new(self)
+    }
+
+    /// Override the paint function for this view.
+    fn paint(
+        self,
+        paint_fn: fn(&mut Self::Element, &mut PaintCtx, &mut Scene),
+    ) -> Paint<Self, Self::Element>
+    where
+        Self: Sized,
+    {
+        Paint::new(self, paint_fn)
     }
 }
 

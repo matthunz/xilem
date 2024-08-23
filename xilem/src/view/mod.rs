@@ -28,5 +28,8 @@ pub use variable_label::*;
 mod prose;
 pub use prose::*;
 
+mod paint;
+pub use paint::*;
+
 mod textbox;
 pub use textbox::*;
